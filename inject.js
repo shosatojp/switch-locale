@@ -14,27 +14,36 @@
         return `${location.protocol}//${location.hostname}${location.pathname}?${queryString}`;
     }
 
-    function switchGl(prevGl) {
-        switch (prevGl) {
-            case 'us':
-                return 'jp';
-            case 'jp':
-            default:
-                return 'us';
-        }
-    }
-
-    function insertUI() {
-        const e = document.createElement('button');
+    function createButton(gl) {
+        const e = document.createElement('a');
         const params = getParams();
-        const gl = switchGl(params.gl);
+        Object.assign(params, { gl });
+        e.textContent = `Switch to '${gl.toUpperCase()}'`;
+        e.style = 'margin-left: 10px; cursor: pointer;';
         e.addEventListener('click', () => {
-            Object.assign(params, { gl });
-            location.href = createURL(params);
+            const ev = new CustomEvent('shosato.jp/switch-lang', { detail: { gl } });
+            document.addEventListener('shosato.jp/switch-lang/r', () => {
+                location.href = createURL(params);
+            });
+            document.dispatchEvent(ev);
         });
-        e.textContent = `Switch to '${gl}'`;
         document.querySelector('#hdtb-msb').appendChild(e);
     }
 
-    insertUI();
+    function insertUI() {
+        const ev = new CustomEvent('shosato.jp/switch-lang/gls');
+        document.addEventListener('shosato.jp/switch-lang/gls/r', (result) => {
+            const gls = result.detail.gls;
+            const params = getParams();
+            gls.forEach(gl => {
+                if (!params.gl || params.gl !== gl) {
+                    createButton(gl);
+                }
+            })
+        });
+        document.dispatchEvent(ev);
+
+    }
+
+    window.addEventListener('DOMContentLoaded', () => insertUI());
 })();
