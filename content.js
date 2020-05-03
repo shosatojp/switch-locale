@@ -32,7 +32,7 @@ document.addEventListener('shosato.jp/switch-lang', e => {
  */
 document.addEventListener('shosato.jp/switch-lang/gls', e => {
     chrome.storage.sync.get(['gls'], function (result) {
-        const gls = JSON.parse(result.gls);
+        const gls = JSON.parse(result.gls || "['us', 'jp']");
         const ev = new CustomEvent('shosato.jp/switch-lang/gls/r', {
             detail: { gls }
         });
