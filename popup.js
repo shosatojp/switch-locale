@@ -1,3 +1,13 @@
+var __chrome;
+if (typeof 'chrome' !== 'undefined') {
+    __chrome = chrome;
+} else if (typeof 'browser' !== 'undefined') {
+    __chrome = browser;
+} else {
+
+}
+var chrome = __chrome;
+
 const textarea = document.querySelector('textarea');
 
 chrome.storage.sync.get(['gls'], function (result) {

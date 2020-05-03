@@ -27,7 +27,6 @@
         "inject.js"
     ],
     "permissions": [
-        "declarativeContent",
         "webNavigation",
         "tabs",
         "storage",
@@ -39,7 +38,7 @@
             "background.js",
             "hot-reload.js"
         ],
-        "persistent": false
+        "persistent": true
     },
     "manifest_version": 2
 }

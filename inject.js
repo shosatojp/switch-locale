@@ -39,7 +39,7 @@
                 if (!params.gl || params.gl !== gl) {
                     createButton(gl);
                 }
-            })
+            });
         });
         document.dispatchEvent(ev);
 

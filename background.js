@@ -1,17 +1,28 @@
+var __chrome;
+if (typeof 'chrome' !== 'undefined') {
+    __chrome = chrome;
+} else if (typeof 'browser' !== 'undefined') {
+    __chrome = browser;
+} else {
+
+}
+var chrome = __chrome;
+
 /**
  * show popup on specific url
  */
-chrome.runtime.onInstalled.addListener(function () {
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-        chrome.declarativeContent.onPageChanged.addRules([{
-            conditions: [new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: { hostEquals: 'www.google.com' },
-            })
-            ],
-            actions: [new chrome.declarativeContent.ShowPageAction()]
-        }]);
-    });
-});
+// chrome.runtime.onInstalled.addListener(function () {
+//     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+//         chrome.declarativeContent.onPageChanged.addRules([{
+//             conditions: [
+//                 new chrome.declarativeContent.PageStateMatcher({
+//                     pageUrl: { hostEquals: 'www.google.com' },
+//                 })
+//             ],
+//             actions: [new chrome.declarativeContent.ShowPageAction()]
+//         }]);
+//     });
+// });
 
 function getParams(search) {
     const params = {};
@@ -36,6 +47,7 @@ let prevUrl = null;
 chrome.webNavigation.onBeforeNavigate.addListener((e) => {
     const url = new URL(e.url);
     if (url.hostname === 'www.google.com' && e.parentFrameId === -1) {
+        chrome.pageAction.show(e.tabId);
         chrome.storage.sync.get(['current'], function (result) {
             console.log('current gl: ' + result.current);
             const params = getParams(url.search);
@@ -44,9 +56,7 @@ chrome.webNavigation.onBeforeNavigate.addListener((e) => {
                 const newUrl = createURL(url, params);
                 if (prevUrl !== newUrl) {
                     console.log('navigate to:', newUrl);
-                    chrome.tabs.update(e.tabId, {
-                        url: newUrl
-                    });
+                    chrome.tabs.update(e.tabId, { url: newUrl });
                     prevUrl = newUrl;
                 }
             }

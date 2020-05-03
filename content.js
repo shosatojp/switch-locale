@@ -1,10 +1,16 @@
+var __chrome;
+if (typeof 'chrome' !== 'undefined') {
+    __chrome = chrome;
+} else if (typeof 'browser' !== 'undefined') {
+    __chrome = browser;
+} else {
+
+}
+var chrome = __chrome;
+
 function injectScript(parent, path) {
     const e = document.createElement('script');
-    if (chrome) {
-        e.setAttribute('src', chrome.extension.getURL(path));
-    } else if (browser) {
-        e.setAttribute('src', browser.runtime.getURL(path));
-    }
+    e.setAttribute('src', chrome.extension.getURL(path));
     parent.appendChild(e);
 }
 
