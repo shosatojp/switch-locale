@@ -1,0 +1,20 @@
+{
+    "name": "Swtich Lang",
+    "version": "1.0",
+    "author": "Sho Sato",
+    "description": "Swtich hl param",
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.google.com/search?*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "inject.js"
+    ],
+    "manifest_version": 2
+}
