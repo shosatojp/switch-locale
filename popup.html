@@ -2,20 +2,48 @@
 
 <head>
     <style>
-        textarea {
+        :root {
+            --popup-height: 300px;
+        }
+
+        html {
+            height: var(--popup-height);
+        }
+
+        body {
             width: 200px;
-            height: 200px
+            height: var(--popup-height);
+            margin: 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            /* margin: 5px; */
+        }
+
+        #container {
+            display: grid;
+            grid-template-rows: auto 200px;
+            margin: 5px;
         }
     </style>
 </head>
 
 <body>
-    <h3>Locale territories list <br>(
-        <a href="https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes" target="_blank">
-            available country list
-        </a>)
-    </h3>
-    <textarea></textarea>
+    <div id="container">
+        <div>
+            <h1>Switch Locale</h1>
+            <h3>Location list <br>(
+                <a href="https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes"
+                    target="_blank">
+                    available country list
+                </a>)
+            </h3>
+            <div>one location per line</div>
+        </div>
+        <textarea></textarea>
+    </div>
     <script src="popup.js"></script>
 </body>
 

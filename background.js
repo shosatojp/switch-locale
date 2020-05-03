@@ -47,7 +47,7 @@ let prevUrl = null;
 chrome.webNavigation.onBeforeNavigate.addListener((e) => {
     const url = new URL(e.url);
     if (url.hostname === 'www.google.com' && e.parentFrameId === -1) {
-        chrome.pageAction.show(e.tabId);
+        // chrome.pageAction.show(e.tabId);
         chrome.storage.sync.get(['current'], function (result) {
             console.log('current gl: ' + result.current);
             const params = getParams(url.search);
